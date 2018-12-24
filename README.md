@@ -1,2 +1,2 @@
-# Self Balancing Cartpole
-Balancing a cartpole using reinforcement learning
+# Cartpole Balancer
+Self balancing cartpole using reinforcement learning
