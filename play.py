@@ -42,7 +42,7 @@ def learn(gym_id, episodes=1000, batch_size=32, model_path="models/model.h5"):
         for steps in range(500):
             action = agent.act(state)
             next_state, reward, done, _ = env.step(action)
-            next_state = np.reshape(next_state, [1, num_states])
+            next_state = np.reshape(next_state, [1, agent.state_size])
             agent.remember(state, action, reward, next_state, done)
             total_reward += reward
             state = next_state
@@ -58,5 +58,5 @@ def learn(gym_id, episodes=1000, batch_size=32, model_path="models/model.h5"):
     return None
 
 if __name__ == '__main__':
-    agent = learn('CartPole-v0', episodes=1000, batch_size=24, model_path="./models/cartpole2.h5")
+    agent = learn('CartPole-v0', episodes=1000, batch_size=24, model_path="./models/cartpole-full-2.h5")
     play('CartPole-v0', episodes=5, agent=agent)
