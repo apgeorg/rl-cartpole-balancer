@@ -52,7 +52,7 @@ def learn(gym_id, episodes=1000, batch_size=32, model_path="models/model.h5"):
                     agent.save(model_path)
                     return agent
                 break
-            if len(agent._memory) > batch_size:
+            if agent.memory_size > batch_size:
                 agent.train(batch_size) # train the agent with the experience of the episode
     env.close()
     return None

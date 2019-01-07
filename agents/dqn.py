@@ -15,6 +15,10 @@ class DQN:
         self._epsilon_decay = exploration_rate_decay
         self._model = model if isinstance(model, Model) else None
 
+    @property
+    def memory_size(self):
+        return len(self._memory)
+
     def remember(self, state, action, reward, next_state, done):
         self._memory.append((state, action, reward, next_state, done))
 
