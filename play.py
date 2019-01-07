@@ -58,5 +58,5 @@ def learn(gym_id, episodes=1000, batch_size=32, model_path="models/model.h5"):
     return None
 
 if __name__ == '__main__':
-    agent = learn('CartPole-v0', episodes=1000, batch_size=24, model_path="./models/cartpole-full-2.h5")
+    agent = learn('CartPole-v0', episodes=1000, batch_size=24, model_path="./models/cartpole-full.h5")
     play('CartPole-v0', episodes=5, agent=agent)
