@@ -1,6 +1,17 @@
 import gym
 import numpy as np
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.optimizers import Adam
 from agents.dqn import DQN
+
+def create_model(states, actions):
+    model = Sequential()
+    model.add(Dense(24, input_dim=states, activation='relu'))
+    model.add(Dense(24, activation='relu'))
+    model.add(Dense(actions, activation='linear'))
+    model.compile(loss='mse', optimizer=Adam(lr=1e-4))
+    return model
 
 def play(gym_id, episodes=1, agent=None):
     env = gym.make(gym_id)
@@ -23,7 +34,7 @@ def learn(gym_id, episodes=1000, batch_size=32, model_path="models/model.h5"):
     env = gym.make(gym_id)
     num_states = env.observation_space.shape[0]
     num_actions = env.action_space.n
-    agent = DQN(num_states, num_actions)
+    agent = DQN(create_model(num_states, num_actions))
     for e in range(episodes):
         state = env.reset()
         state = np.reshape(state, [1, num_states])
@@ -41,11 +52,11 @@ def learn(gym_id, episodes=1000, batch_size=32, model_path="models/model.h5"):
                     agent.save(model_path)
                     return agent
                 break
-            if len(agent.memory) > batch_size:
+            if len(agent._memory) > batch_size:
                 agent.train(batch_size) # train the agent with the experience of the episode
     env.close()
     return None
 
 if __name__ == '__main__':
-    agent = learn('CartPole-v0', episodes=1000, batch_size=24, model_path="./models/cartpole.h5")
+    agent = learn('CartPole-v0', episodes=1000, batch_size=24, model_path="./models/cartpole2.h5")
     play('CartPole-v0', episodes=5, agent=agent)
